@@ -17,7 +17,6 @@
 package com.example.android.hilt.ui
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,10 +24,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.hilt.LogApplication
 import com.example.android.hilt.R
 import com.example.android.hilt.data.Log
-import com.example.android.hilt.data.LoggerLocalDataSource
+import com.example.android.hilt.data.LoggerDataSource
+import com.example.android.hilt.di.InMemoryLogger
 import com.example.android.hilt.util.DateFormatter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -51,8 +50,10 @@ class LogsFragment : Fragment() {
     /*
     @Inject 주석을 사용하여 Hilt에서 삽입하려는 다른 유형의 인스턴스(예: logger, dateFormatter)를 필드에 삽입하도록 할 수 있습니다.
     */
+    @InMemoryLogger
     @Inject
-    lateinit var logger: LoggerLocalDataSource
+    lateinit var logger: LoggerDataSource
+
     @Inject
     lateinit var dateFormatter: DateFormatter
 
