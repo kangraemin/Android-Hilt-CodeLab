@@ -17,7 +17,13 @@
 package com.example.android.hilt
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 
+/*
+@HiltAndroidApp은 종속 항목 삽입을 사용할 수 있는 애플리케이션의 기본 클래스가 포함된 Hilt 코드 생성을 트리거합니다.
+애플리케이션 컨테이너는 앱의 상위 컨테이너이므로 다른 컨테이너는 이 상위 컨테이너에서 제공하는 종속 항목에 액세스할 수 있습니다.
+*/
+@HiltAndroidApp
 class LogApplication : Application() {
 
     lateinit var serviceLocator: ServiceLocator

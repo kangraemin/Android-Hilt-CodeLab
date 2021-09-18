@@ -20,11 +20,22 @@ import android.os.Handler
 import android.os.Looper
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Data manager class that handles data manipulation between the database and the UI.
  */
-class LoggerLocalDataSource(private val logDao: LogDao) {
+
+/*
+서로 다른 유형의 인스턴스를 제공하는 방법에 관해 Hilt에서 알고 있는 정보를 결합이라고도 합니다.
+
+현재 Hilt에는 1) DateFormatter 인스턴스와 2) LoggerLocalDataSource 인스턴스를 제공하는 방법, 즉 두 가지 결합이 있습니다.
+
+위에서 언급한 대로 애플리케이션 컨테이너에서 항상 동일한 LoggerLocalDataSource 인스턴스를 제공하도록 하기 위해 클래스에 @Singleton 주석을 추가합니다.
+*/
+@Singleton
+class LoggerLocalDataSource @Inject constructor(private val logDao: LogDao) {
 
     private val executorService: ExecutorService = Executors.newFixedThreadPool(4)
     private val mainThreadHandler by lazy {

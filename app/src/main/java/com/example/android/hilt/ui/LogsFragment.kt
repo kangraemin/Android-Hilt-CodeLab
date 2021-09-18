@@ -30,14 +30,31 @@ import com.example.android.hilt.R
 import com.example.android.hilt.data.Log
 import com.example.android.hilt.data.LoggerLocalDataSource
 import com.example.android.hilt.util.DateFormatter
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * Fragment that displays the database logs.
  */
+
+
+/*
+Android 클래스에 @AndroidEntryPoint 주석을 달면 Android 클래스 수명 주기를 따르는 종속 항목 컨테이너가 생성됩니다.
+
+Hilt는 현재 Android 유형 중 Application(@HiltAndroidApp 사용), Activity, Fragment, View, Service, BroadcastReceiver를 지원합니다.
+
+Hilt는 FragmentActivity(예: AppCompatActivity)를 확장하는 활동, 그리고 Android 플랫폼의 Fragment(현재 지원 중단됨)가 아닌 Jetpack 라이브러리 Fragment를 확장하는 프래그먼트만 지원합니다.
+*/
+@AndroidEntryPoint
 class LogsFragment : Fragment() {
 
-    private lateinit var logger: LoggerLocalDataSource
-    private lateinit var dateFormatter: DateFormatter
+    /*
+    @Inject 주석을 사용하여 Hilt에서 삽입하려는 다른 유형의 인스턴스(예: logger, dateFormatter)를 필드에 삽입하도록 할 수 있습니다.
+    */
+    @Inject
+    lateinit var logger: LoggerLocalDataSource
+    @Inject
+    lateinit var dateFormatter: DateFormatter
 
     private lateinit var recyclerView: RecyclerView
 
@@ -53,18 +70,6 @@ class LogsFragment : Fragment() {
         recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view).apply {
             setHasFixedSize(true)
         }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        populateFields(context)
-    }
-
-    private fun populateFields(context: Context) {
-        logger = (context.applicationContext as LogApplication).serviceLocator.loggerLocalDataSource
-        dateFormatter =
-            (context.applicationContext as LogApplication).serviceLocator.provideDateFormatter()
     }
 
     override fun onResume() {
