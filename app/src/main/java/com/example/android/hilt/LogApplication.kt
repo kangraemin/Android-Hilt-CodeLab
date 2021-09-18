@@ -24,12 +24,4 @@ import dagger.hilt.android.HiltAndroidApp
 애플리케이션 컨테이너는 앱의 상위 컨테이너이므로 다른 컨테이너는 이 상위 컨테이너에서 제공하는 종속 항목에 액세스할 수 있습니다.
 */
 @HiltAndroidApp
-class LogApplication : Application() {
-
-    lateinit var serviceLocator: ServiceLocator
-
-    override fun onCreate() {
-        super.onCreate()
-        serviceLocator = ServiceLocator(applicationContext)
-    }
-}
+class LogApplication : Application()
